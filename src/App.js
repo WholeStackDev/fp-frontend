@@ -1,28 +1,33 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import blueGrey from "@material-ui/core/colors/blueGrey";
+import Upload from "./components/Upload/upload";
+import LuxonUtils from "@date-io/luxon";
+import { MuiPickersUtilsProvider } from "material-ui-pickers";
+import Header from "./components/Layout/header";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+const theme = createMuiTheme({
+  palette: {
+    primary: blueGrey
+  },
+  typography: {
+    useNextVariants: true
   }
-}
+});
 
-export default App;
+const app = () => {
+  return (
+    <div id="app">
+      <MuiPickersUtilsProvider utils={LuxonUtils}>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline />
+          <Header />
+          <Upload />
+        </MuiThemeProvider>
+      </MuiPickersUtilsProvider>
+    </div>
+  );
+};
+
+export default app;
