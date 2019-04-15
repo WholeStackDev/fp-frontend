@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { TextField } from "@material-ui/core";
 import { InlineDatePicker } from "material-ui-pickers";
 import { DateTime } from "luxon";
-import getByteSize from "../../utils/getByteSize";
+import getFileSize from "../../utils/getFileSize";
 import getDuration from "../../utils/getDuration";
 
 const track = props => {
@@ -14,7 +14,7 @@ const track = props => {
     setEventYear(
       props.track.eventYear ? DateTime.local(props.track.eventYear) : null
     );
-    setFileSize(getByteSize(props.track.fileSize));
+    setFileSize(getFileSize(props.track.fileSize));
     setDuration(getDuration(props.track.duration));
   }, []);
 

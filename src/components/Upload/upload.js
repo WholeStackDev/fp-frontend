@@ -6,6 +6,13 @@ import Track from "../Track/track";
 import { Input, Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+// import Drawer from "@material-ui/core/Drawer";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import Typography from "@material-ui/core/Typography";
+
+const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
@@ -16,10 +23,18 @@ const styles = theme => ({
   box: {
     padding: theme.spacing.unit * 2,
     textAlign: "center",
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
+    margin: "2rem"
   },
   control: {
     padding: theme.spacing.unit * 2
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0
+  },
+  drawerPaper: {
+    width: drawerWidth
   }
 });
 
@@ -57,9 +72,40 @@ const upload = props => {
   //     });
   // };
 
-  const RenderTrack = () => {
+  const RenderTracks = () => {
     if (trackData) {
-      return <Track track={trackData} />;
+      return (
+        <div id="tracks">
+          {/* <Drawer
+            className={classes.drawer}
+            variant="permanent"
+            classes={{ paper: classes.drawerPaper }}
+            // anchor="left"
+          > */}
+          {/* <div className={classes.toolbar} /> */}
+          <List>
+            {["Item 1", "Item 2"].map((text, index) => (
+              <ListItem>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+          {/* </Drawer> */}
+          <Track track={trackData} />
+        </div>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  const UploadButton = () => {
+    if (trackData) {
+      return (
+        <Button variant="contained" color="primary">
+          Upload
+        </Button>
+      );
     } else {
       return null;
     }
@@ -68,17 +114,35 @@ const upload = props => {
   const { classes } = props;
 
   return (
-    <Grid container className={classes.root} spacing={16}>
+    <Grid container className={classes.root} direction="column" spacing={16}>
       <Grid item xs={12} className={classes.box}>
-        <Input type="file" name="file" onChange={fileSelectHandler} />
+        <input
+          id="upload-input"
+          accept="audio/*"
+          name="uploadInput"
+          type="file"
+          multiple
+          onChange={fileSelectHandler}
+          style={{ display: "none" }}
+        />
+        <label htmlFor="upload-input">
+          <Button
+            raised
+            component="span"
+            variant="contained"
+            color="primary"
+            className={classes.button}
+          >
+            Select File
+          </Button>
+        </label>
       </Grid>
-      <Grid item xs={2} className={classes.box} />
+      {/* <Grid item xs={2} className={classes.box} /> */}
       <Grid item xs={8} className={classes.box}>
-        <RenderTrack />
+        <RenderTracks />
       </Grid>
       <Grid item xs={12} className={classes.box}>
-        <Button variant="outlined">Upload</Button>
-        {/* <Button onClick={submitFileHandler}>Upload</Button> */}
+        <UploadButton />
       </Grid>
     </Grid>
   );
