@@ -5,7 +5,7 @@ import * as mm from "music-metadata-browser";
 import { Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import styles from "./uploadStyles";
+import styles from "./upload.styles";
 import Tracks from "./Tracks/Tracks";
 
 const upload = props => {
@@ -13,20 +13,38 @@ const upload = props => {
   const [trackData, setTrackData] = useState(null);
 
   const fileSelectHandler = event => {
-    var fileData = event.target.files[0];
-    mm.parseBlob(fileData).then(metadata => {
-      console.log(fileData);
-      console.log(metadata);
-      setTrackData({
-        fileName: fileData.name,
-        title: metadata.common.title,
-        speaker: metadata.common.artist,
-        event: "",
-        eventYear: metadata.common.year,
-        fileSize: fileData.size,
-        duration: metadata.format.duration
+    const files = event.target.files;
+    let filesArray = [];
+
+    Object.keys(files).forEach(file => {
+      mm.parseBlob(files[file]).then(metadata => {
+        filesArray.push({
+          fileName: files[file].name,
+          title: metadata.common.title,
+          speaker: metadata.common.artist,
+          event: "",
+          eventYear: metadata.common.year,
+          fileSize: files[file].size,
+          duration: metadata.format.duration
+        });
+        console.log(filesArray);
+        setTrackData([...filesArray]);
       });
     });
+
+    // var fileData = event.target.files[0];
+
+    // mm.parseBlob(fileData).then(metadata => {
+    //   setTrackData({
+    //     fileName: fileData.name,
+    //     title: metadata.common.title,
+    //     speaker: metadata.common.artist,
+    //     event: "",
+    //     eventYear: metadata.common.year,
+    //     fileSize: fileData.size,
+    //     duration: metadata.format.duration
+    //   });
+    // });
   };
 
   // const submitFileHandler = () => {
@@ -81,7 +99,7 @@ const upload = props => {
         </label>
       </Grid>
       <Grid item xs={8} className={classes.box}>
-        <Tracks trackData={trackData} />
+        <Tracks tracks={trackData} />
       </Grid>
       <Grid item xs={12} className={classes.box}>
         <UploadButton />

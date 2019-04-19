@@ -7,16 +7,20 @@ import getDuration from "../../utils/getDuration";
 
 const track = props => {
   useEffect(() => {
-    setFileName(props.track.fileName);
-    setTitle(props.track.title);
-    setSpeaker(props.track.speaker);
-    setEvent(props.track.event);
-    setEventYear(
-      props.track.eventYear ? DateTime.local(props.track.eventYear) : null
-    );
-    setFileSize(getFileSize(props.track.fileSize));
-    setDuration(getDuration(props.track.duration));
-  }, []);
+    console.log("ran");
+    console.log(props.track);
+    if (props.track) {
+      setFileName(props.track.fileName);
+      setTitle(props.track.title);
+      setSpeaker(props.track.speaker);
+      setEvent(props.track.event);
+      setEventYear(
+        props.track.eventYear ? DateTime.local(props.track.eventYear) : null
+      );
+      setFileSize(getFileSize(props.track.fileSize));
+      setDuration(getDuration(props.track.duration));
+    }
+  });
 
   const [fileName, setFileName] = useState("");
   const [title, setTitle] = useState("");
