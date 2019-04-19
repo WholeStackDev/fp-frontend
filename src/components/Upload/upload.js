@@ -1,42 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 // import axios from "axios";
 import * as mm from "music-metadata-browser";
-import Track from "../Track/track";
-import { Input, Button } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-// import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Typography from "@material-ui/core/Typography";
-
-const drawerWidth = 240;
-
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    alignItems: "center",
-    textAlign: "center"
-  },
-  box: {
-    padding: theme.spacing.unit * 2,
-    textAlign: "center",
-    color: theme.palette.text.primary,
-    margin: "2rem"
-  },
-  control: {
-    padding: theme.spacing.unit * 2
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0
-  },
-  drawerPaper: {
-    width: drawerWidth
-  }
-});
+import styles from "./uploadStyles";
+import Tracks from "./Tracks/Tracks";
 
 const upload = props => {
   // const [file, setFile] = useState(null);
@@ -72,33 +42,6 @@ const upload = props => {
   //     });
   // };
 
-  const RenderTracks = () => {
-    if (trackData) {
-      return (
-        <div id="tracks">
-          {/* <Drawer
-            className={classes.drawer}
-            variant="permanent"
-            classes={{ paper: classes.drawerPaper }}
-            // anchor="left"
-          > */}
-          {/* <div className={classes.toolbar} /> */}
-          <List>
-            {["Item 1", "Item 2"].map((text, index) => (
-              <ListItem>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-          {/* </Drawer> */}
-          <Track track={trackData} />
-        </div>
-      );
-    } else {
-      return null;
-    }
-  };
-
   const UploadButton = () => {
     if (trackData) {
       return (
@@ -127,7 +70,7 @@ const upload = props => {
         />
         <label htmlFor="upload-input">
           <Button
-            raised
+            raised="true"
             component="span"
             variant="contained"
             color="primary"
@@ -137,9 +80,8 @@ const upload = props => {
           </Button>
         </label>
       </Grid>
-      {/* <Grid item xs={2} className={classes.box} /> */}
       <Grid item xs={8} className={classes.box}>
-        <RenderTracks />
+        <Tracks trackData={trackData} />
       </Grid>
       <Grid item xs={12} className={classes.box}>
         <UploadButton />
