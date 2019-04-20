@@ -1,50 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 // import axios from "axios";
 import * as mm from "music-metadata-browser";
 import { Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import styles from "./upload.styles";
+import styles from "./Upload.styles";
 import Tracks from "./Tracks/Tracks";
+import { connect } from "react-redux";
+import * as actionTypes from "../../Store/Actions";
 
 const upload = props => {
-  // const [file, setFile] = useState(null);
-  const [trackData, setTrackData] = useState(null);
-
   const fileSelectHandler = event => {
-    const files = event.target.files;
-    let filesArray = [];
+    props.clearTracks();
 
-    Object.keys(files).forEach(file => {
-      mm.parseBlob(files[file]).then(metadata => {
-        filesArray.push({
-          fileName: files[file].name,
-          title: metadata.common.title,
-          speaker: metadata.common.artist,
+    (async files => {
+      let id = 0;
+      const results = [];
+      for (const file of files) {
+        id++;
+        let meta = await mm.parseBlob(file);
+        results.push({
+          id: id,
+          fileName: file.name || "",
+          title: meta.common.title || "",
+          speaker: meta.common.artist || "",
           event: "",
-          eventYear: metadata.common.year,
-          fileSize: files[file].size,
-          duration: metadata.format.duration
+          eventYear: meta.common.year || null,
+          fileSize: file.size || 0,
+          duration: meta.format.duration || 0
         });
-        console.log(filesArray);
-        setTrackData([...filesArray]);
-      });
-    });
-
-    // var fileData = event.target.files[0];
-
-    // mm.parseBlob(fileData).then(metadata => {
-    //   setTrackData({
-    //     fileName: fileData.name,
-    //     title: metadata.common.title,
-    //     speaker: metadata.common.artist,
-    //     event: "",
-    //     eventYear: metadata.common.year,
-    //     fileSize: fileData.size,
-    //     duration: metadata.format.duration
-    //   });
-    // });
+      }
+      props.addTrack(results);
+    })(event.target.files);
   };
 
   // const submitFileHandler = () => {
@@ -61,7 +49,7 @@ const upload = props => {
   // };
 
   const UploadButton = () => {
-    if (trackData) {
+    if (props.tracks.length > 0) {
       return (
         <Button variant="contained" color="primary">
           Upload
@@ -94,12 +82,12 @@ const upload = props => {
             color="primary"
             className={classes.button}
           >
-            Select File
+            Select Files
           </Button>
         </label>
       </Grid>
       <Grid item xs={8} className={classes.box}>
-        <Tracks tracks={trackData} />
+        <Tracks tracks={props.tracks} />
       </Grid>
       <Grid item xs={12} className={classes.box}>
         <UploadButton />
@@ -112,4 +100,21 @@ upload.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(upload);
+const mapStateToProps = state => {
+  return {
+    tracks: state.upload.tracks
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addTrack: track =>
+      dispatch({ type: actionTypes.ADD_TRACK, trackToAdd: track }),
+    clearTracks: () => dispatch({ type: actionTypes.CLEAR_TRACKS })
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(upload));

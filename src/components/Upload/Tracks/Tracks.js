@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -6,25 +6,28 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./Tracks.style";
-import Track from "../../Track/track";
+import Track from "../../Track/Track";
+import { connect } from "react-redux";
+import * as actionTypes from "../../../Store/Actions";
 
 const tracks = props => {
   const { classes } = props;
-  const [selectedTrack, setSelectedTrack] = useState(null);
-  const [selectedTrackIndex, setSelectedTrackIndex] = useState(0);
+  // const [selectedTrack, setSelectedTrack] = useState(null);
+  // const [selectedTrackIndex, setSelectedTrackIndex] = useState(0);
 
-  if (props.tracks) {
+  if (props.tracks.length > 0) {
     const changeSelectedTrack = selectedIndex => {
-      setSelectedTrackIndex(selectedIndex);
-      setSelectedTrack(props.tracks[selectedIndex]);
+      // setSelectedTrackIndex(selectedIndex);
+      // setSelectedTrack(props.tracks[selectedIndex]);
+      props.setSelectedTrackIndex(selectedIndex);
     };
 
-    const TrackList = props.tracks.map((text, index) => {
+    const TrackList = props.tracks.map((track, index) => {
       return (
         <ListItem
           key={index}
           button
-          selected={index === selectedTrackIndex}
+          selected={index === props.selectedTrackIndex}
           onClick={() => changeSelectedTrack(index)}
         >
           <ListItemText primary={index + 1} />
@@ -39,7 +42,7 @@ const tracks = props => {
             <List>{TrackList}</List>
           </Grid>
           <Grid item xs={11}>
-            <Track track={selectedTrack} />
+            <Track />
           </Grid>
         </Grid>
       </Paper>
@@ -49,4 +52,24 @@ const tracks = props => {
   }
 };
 
-export default withStyles(styles)(tracks);
+const mapStateToProps = state => {
+  return {
+    tracks: state.upload.tracks,
+    selectedTrackIndex: state.upload.selectedTrackIndex
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setSelectedTrackIndex: index =>
+      dispatch({
+        type: actionTypes.SET_SELECTED_TRACK_INDEX,
+        selectedTrack: index
+      })
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(tracks));

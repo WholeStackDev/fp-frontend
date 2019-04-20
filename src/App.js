@@ -2,10 +2,10 @@ import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import blueGrey from "@material-ui/core/colors/blueGrey";
-import Upload from "./components/Upload/upload";
+import Upload from "./Components/Upload/Upload";
 import LuxonUtils from "@date-io/luxon";
 import { MuiPickersUtilsProvider } from "material-ui-pickers";
-import Header from "./components/Layout/header";
+import Header from "./Components/Layout/Header";
 
 const theme = createMuiTheme({
   palette: {

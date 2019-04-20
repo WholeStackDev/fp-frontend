@@ -1,0 +1,4 @@
+export const ADD_TRACK = 'ADD_TRACK';
+export const CLEAR_TRACKS = 'CLEAR_TRACKS';
+export const SET_SELECTED_TRACK_INDEX = 'SET_SELECTED_TRACK_INDEX';
+export const EDIT_TRACK = 'EDIT_TRACK';
