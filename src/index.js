@@ -4,10 +4,33 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "typeface-roboto";
+import axios from "axios";
 
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import uploadReducer from "./Store/Reducers/UploadReducer";
+
+axios.interceptors.request.use(
+  request => {
+    console.log(request);
+    return request;
+  },
+  error => {
+    console.log(error);
+    return error;
+  }
+);
+
+axios.interceptors.response.use(
+  response => {
+    console.log(response);
+    return response;
+  },
+  error => {
+    console.log(error);
+    return error;
+  }
+);
 
 const rootReducer = combineReducers({
   upload: uploadReducer
