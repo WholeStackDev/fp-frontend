@@ -28,17 +28,37 @@ function PlayerMinimized() {
             What happens when the title is very, very long
           </Typography>
           <IconButton className={classes.margin}>
-            <SkipPrevious className={classes.buttons} fontSize="large" />
+            <SkipPrevious
+              className={classes.buttons}
+              fontSize="large"
+              style={{ fill: "#333" }}
+            />
           </IconButton>
           <IconButton
             onClick={() => playPauseHandler()}
             className={classes.margin}
           >
-            {playing && <Play className={classes.buttons} fontSize="large" />}
-            {!playing && <Pause className={classes.buttons} fontSize="large" />}
+            {playing && (
+              <Play
+                className={classes.buttons}
+                fontSize="large"
+                style={{ fill: "#333" }}
+              />
+            )}
+            {!playing && (
+              <Pause
+                className={classes.buttons}
+                fontSize="large"
+                style={{ fill: "#333" }}
+              />
+            )}
           </IconButton>
           <IconButton className={classes.margin}>
-            <SkipNext className={classes.buttons} fontSize="large" />
+            <SkipNext
+              className={classes.buttons}
+              fontSize="large"
+              style={{ fill: "#333" }}
+            />
           </IconButton>
         </Toolbar>
       </AppBar>

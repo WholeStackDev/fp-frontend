@@ -5,7 +5,7 @@ const styles = makeStyles({
     width: "100%",
     position: "fixed",
     bottom: 0,
-    borderTop: "1px solid gray",
+    borderTop: "1px solid #CCC",
     height: "3.5rem"
   }
 });
