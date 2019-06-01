@@ -1,20 +1,13 @@
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import blueGrey from "@material-ui/core/colors/blueGrey";
-import Upload from "./Components/Upload/Upload";
 import LuxonUtils from "@date-io/luxon";
+import { MuiThemeProvider } from "@material-ui/core/styles";
 import { MuiPickersUtilsProvider } from "material-ui-pickers";
-import Header from "./Components/Layout/Header";
 
-const theme = createMuiTheme({
-  palette: {
-    primary: blueGrey
-  },
-  typography: {
-    useNextVariants: true
-  }
-});
+import theme from "./theme";
+import BottomNavigation from "./Components/BottomNavigation/BottomNavigation";
+import PlayerMinimized from "./Components/NowPlayingBar/NowPlayingBar";
+import Account from "./Components/Account/Account";
 
 const app = () => {
   return (
@@ -22,8 +15,9 @@ const app = () => {
       <MuiPickersUtilsProvider utils={LuxonUtils}>
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
-          <Header />
-          <Upload />
+          <Account />
+          <PlayerMinimized />
+          <BottomNavigation />
         </MuiThemeProvider>
       </MuiPickersUtilsProvider>
     </div>

@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import axios from "axios";
+import axios from "axios";
 import * as mm from "music-metadata-browser";
 import { Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import styles from "./Upload.styles";
-import Tracks from "./Tracks/Tracks";
+import Tracks from "./Tracks/Tracks2";
 import { connect } from "react-redux";
 import * as actionTypes from "../../Store/Actions";
 
@@ -28,30 +28,44 @@ const upload = props => {
           event: "",
           eventYear: meta.common.year || null,
           fileSize: file.size || 0,
-          duration: meta.format.duration || 0
+          duration: meta.format.duration || 0,
+          file: file
         });
       }
       props.addTrack(results);
     })(event.target.files);
   };
 
-  // const submitFileHandler = () => {
-  //   const data = new FormData();
-  //   data.append("file", file);
-  //   axios
-  //     .post("https://localhost:44308/api/values", data)
-  //     .then(results => {
-  //       console.log(results.status);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // };
+  const submitFileHandler = () => {
+    const data = new FormData();
+    // Object.keys(props.tracks[0]).forEach(key =>
+    //   data.append(key.toLowerCase(), props.tracks[0][key])
+    // );
+    data.append("title", props.tracks[0].title);
+    data.append("trackfile", props.tracks[0].file);
+    data.append("speaker", props.tracks[0].speaker);
+    data.append("event", props.tracks[0].event);
+    data.append("eventyear", "null");
+    console.log(props.tracks[0].eventYear);
+    // data.append("filesize", props.tracks[0].fileSize);
+    // const data = { file: props.tracks[0].file };
+    // const data = { title: props.tracks[0].title, file: props.tracks[0].file };
+    // delete data.id;
+    // data.duration = Math.round(data.duration);
+    axios
+      .post("https://localhost:44308/api/tracks/", data)
+      .then(results => {
+        // console.log(results.status);
+      })
+      .catch(err => {
+        // console.log(err);
+      });
+  };
 
   const UploadButton = () => {
     if (props.tracks.length > 0) {
       return (
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" onClick={submitFileHandler}>
           Upload
         </Button>
       );
