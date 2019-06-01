@@ -20,6 +20,9 @@ const styles = makeStyles(theme => ({
   },
   margin: {
     margin: theme.spacing(-0.5)
+  },
+  icons: {
+    fill: "#333"
   }
 }));
 
