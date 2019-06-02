@@ -17,7 +17,11 @@ const app = () => {
         <MuiThemeProvider theme={theme}>
           <BrowserRouter>
             <CssBaseline />
-            <Route path="/account" component={Account} />
+            <div id="content">
+              <Route path="/account" component={Account} />
+              {/* The div below is a hack to account for the spacing of the bottom nav and now playing bar */}
+              <div style={{ height: "7rem" }} />
+            </div>
             <PlayerMinimized />
             <BottomNavigation />
           </BrowserRouter>

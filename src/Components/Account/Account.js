@@ -4,18 +4,20 @@ import Styles from "./Account.styles";
 import { Fragment } from "react";
 import Typography from "@material-ui/core/Typography";
 import MenuNavigation from "../MenuNavigation/MenuNavigation";
-import AppBar from "@material-ui/core/AppBar";
+import AppBar from "../AppBar/AppBar";
+// import AppBar from "@material-ui/core/AppBar";
 
 function Account() {
   const classes = Styles();
 
   return (
     <Fragment>
-      <AppBar position="sticky" color="inherit" className={classes.appBar}>
+      <AppBar title="Account" />
+      {/* <AppBar position="sticky" color="inherit" className={classes.appBar}>
         <Typography variant="h6" gutterBottom className={classes.header}>
           Account
         </Typography>
-      </AppBar>
+      </AppBar> */}
       <MenuNavigation url="/upload" label="Upload" first />
       <MenuNavigation url="/my-uploads" label="My Uploads" />
       <p style={{ padding: "2rem" }}>

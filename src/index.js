@@ -8,7 +8,7 @@ import axios from "axios";
 
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
-import uploadReducer from "./Store/Reducers/UploadReducer";
+import generalReducer from "./Store/Reducers/GeneralReducer";
 
 axios.interceptors.request.use(
   request => {
@@ -33,7 +33,7 @@ axios.interceptors.response.use(
 );
 
 const rootReducer = combineReducers({
-  upload: uploadReducer
+  general: generalReducer
 });
 
 const store = createStore(
