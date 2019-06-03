@@ -8,7 +8,10 @@ import { BrowserRouter, Route } from "react-router-dom";
 import theme from "./theme";
 import BottomNavigation from "./Components/BottomNavigation/BottomNavigation";
 import PlayerMinimized from "./Components/NowPlayingBar/NowPlayingBar";
+import AppBar from "./Components/AppBar/AppBar";
 import Account from "./Components/Account/Account";
+import Browse from "./Components/Browse/Browse";
+import Search from "./Components/Search/Search";
 
 const app = () => {
   return (
@@ -17,8 +20,11 @@ const app = () => {
         <MuiThemeProvider theme={theme}>
           <BrowserRouter>
             <CssBaseline />
+            <AppBar />
             <div id="content">
               <Route path="/account" component={Account} />
+              <Route path="/browse" component={Browse} />
+              <Route path="/search" component={Search} />
               {/* The div below is a hack to account for the spacing of the bottom nav and now playing bar */}
               <div style={{ height: "7rem" }} />
             </div>

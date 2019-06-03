@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import Styles from "./AppBar.styles";
+
 import MuiAppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
-import Styles from "./AppBar.styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
@@ -9,7 +12,7 @@ import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 const AppBar = props => {
   const classes = Styles();
   // I'm using accountIconWidth to store the width of the account icon so I can
-  // move the
+  // center the title.
   const [accountIconButtonWidth, setAccountIconButtonWidth] = useState(24);
 
   useEffect(() => {
@@ -17,10 +20,6 @@ const AppBar = props => {
       document.getElementById("account-icon-button").clientWidth
     );
   });
-
-  const clickHandler = () => {
-    // console.log(document.getElementById("account-icon").clientWidth);
-  };
 
   return (
     <MuiAppBar position="sticky" color="inherit" className={classes.appBar}>
@@ -33,9 +32,9 @@ const AppBar = props => {
             left: accountIconButtonWidth / 2 + "px"
           }}
         >
-          {props.title}
+          {props.pageName}
         </Typography>
-        <IconButton onClick={clickHandler} id="account-icon-button">
+        <IconButton component={Link} to="/account" id="account-icon-button">
           <AccountIcon className={classes.accountIcon} id="account-icon" />
         </IconButton>
       </Toolbar>
@@ -43,4 +42,10 @@ const AppBar = props => {
   );
 };
 
-export default AppBar;
+const mapStateToProps = state => {
+  return {
+    pageName: state.general.pageName
+  };
+};
+
+export default connect(mapStateToProps)(AppBar);

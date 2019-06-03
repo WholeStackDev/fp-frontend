@@ -6,9 +6,8 @@ import * as serviceWorker from "./serviceWorker";
 import "typeface-roboto";
 import axios from "axios";
 
-import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
-import generalReducer from "./Store/Reducers/GeneralReducer";
+import store from "./Store/Store";
 
 axios.interceptors.request.use(
   request => {
@@ -30,15 +29,6 @@ axios.interceptors.response.use(
     console.log(error);
     return error;
   }
-);
-
-const rootReducer = combineReducers({
-  general: generalReducer
-});
-
-const store = createStore(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 ReactDOM.render(
