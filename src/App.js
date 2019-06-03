@@ -22,6 +22,7 @@ const app = () => {
             <CssBaseline />
             <AppBar />
             <div id="content">
+              <Route path="/" exact component={Browse} />
               <Route path="/account" exact component={Account} />
               <Route path="/browse" exact component={Browse} />
               <Route path="/search" exact component={Search} />
