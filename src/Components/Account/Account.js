@@ -12,7 +12,6 @@ const Account = () => {
   return (
     <Fragment>
       <MenuNavigation url="/upload" label="Upload" first />
-      <MenuNavigation url="/my-uploads" label="My Uploads" />
     </Fragment>
   );
 };

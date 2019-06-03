@@ -1,12 +1,20 @@
 import React, { useEffect } from "react";
 import UpdatePageName from "../../Utilities/PageNameUpdate";
 
-const Browse = props => {
+import { Fragment } from "react";
+import MenuNavigation from "../MenuNavigation/MenuNavigation";
+
+const Browse = () => {
   useEffect(() => {
     UpdatePageName("Browse");
   });
 
-  return <div>Browse stuff</div>;
+  return (
+    <Fragment>
+      <MenuNavigation url="/browse/speaker" label="Speaker" first />
+      <MenuNavigation url="/browse/event" label="Event" />
+    </Fragment>
+  );
 };
 
 export default Browse;

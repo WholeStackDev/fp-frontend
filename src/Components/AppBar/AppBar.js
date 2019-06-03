@@ -25,7 +25,7 @@ const AppBar = props => {
     <MuiAppBar position="sticky" color="inherit" className={classes.appBar}>
       <Toolbar>
         <Typography
-          variant="h6"
+          variant="subtitle1"
           gutterBottom
           className={classes.title}
           style={{

@@ -22,9 +22,9 @@ const app = () => {
             <CssBaseline />
             <AppBar />
             <div id="content">
-              <Route path="/account" component={Account} />
-              <Route path="/browse" component={Browse} />
-              <Route path="/search" component={Search} />
+              <Route path="/account" exact component={Account} />
+              <Route path="/browse" exact component={Browse} />
+              <Route path="/search" exact component={Search} />
               {/* The div below is a hack to account for the spacing of the bottom nav and now playing bar */}
               <div style={{ height: "7rem" }} />
             </div>

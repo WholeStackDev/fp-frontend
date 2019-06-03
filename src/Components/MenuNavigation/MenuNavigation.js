@@ -11,7 +11,6 @@ const MenuNavigation = props => {
   const classes = Styles();
 
   const clickHandler = () => {
-    console.log(props);
     setTimeout(() => {
       props.history.push({ pathname: props.url });
     }, 300);
@@ -20,7 +19,6 @@ const MenuNavigation = props => {
   const first = props.first ? classes.first : null;
 
   return (
-    // <div className={classes.root} onClick={clickHandler}>
     <ButtonBase className={classes.root + " " + first} onClick={clickHandler}>
       <Grid container className={classes.grid}>
         <Grid item xs={11}>
@@ -33,7 +31,6 @@ const MenuNavigation = props => {
         </Grid>
       </Grid>
     </ButtonBase>
-    // </div>
   );
 };
 
