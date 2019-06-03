@@ -5,10 +5,8 @@ import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import { Link } from "react-router-dom";
 
-import Library from "@material-ui/icons/LibraryBooksOutlined";
 import Explore from "@material-ui/icons/ExploreOutlined";
 import Search from "@material-ui/icons/SearchOutlined";
-import Account from "@material-ui/icons/AccountCircleOutlined";
 
 function BottomNav() {
   const classes = Styles();
@@ -24,28 +22,16 @@ function BottomNav() {
       className={classes.root}
     >
       <BottomNavigationAction
-        label="Library"
-        icon={<Library />}
-        component={Link}
-        to="/library"
-      />
-      <BottomNavigationAction
-        label="Explore"
+        label="Browse"
         icon={<Explore />}
         component={Link}
-        to="/explore"
+        to="/browse"
       />
       <BottomNavigationAction
         label="Search"
         icon={<Search />}
         component={Link}
         to="/search"
-      />
-      <BottomNavigationAction
-        component={Link}
-        to="/account"
-        label="Account"
-        icon={<Account />}
       />
     </BottomNavigation>
   );
