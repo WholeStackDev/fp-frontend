@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import PageNameUpdate from "../../Utilities/PageNameUpdate";
+
 import Styles from "./Upload.styles";
 import Button from "@material-ui/core/Button";
 
@@ -8,6 +10,10 @@ const Upload = props => {
   const fileSelectHandler = event => {
     console.log(event.target.files);
   };
+
+  useEffect(() => {
+    PageNameUpdate("Upload");
+  });
 
   return (
     <div className={classes.root}>
