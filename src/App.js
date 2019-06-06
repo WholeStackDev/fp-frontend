@@ -12,6 +12,7 @@ import AppBar from "./Components/AppBar/AppBar";
 import Account from "./Components/Account/Account";
 import Browse from "./Components/Browse/Browse";
 import Search from "./Components/Search/Search";
+import Upload from "./Components/Upload/Upload";
 
 const app = () => {
   return (
@@ -26,6 +27,7 @@ const app = () => {
               <Route path="/account" exact component={Account} />
               <Route path="/browse" exact component={Browse} />
               <Route path="/search" exact component={Search} />
+              <Route path="/upload" exact component={Upload} />
               {/* The div below is a hack to account for the spacing of the bottom nav and now playing bar */}
               <div style={{ height: "7rem" }} />
             </div>
