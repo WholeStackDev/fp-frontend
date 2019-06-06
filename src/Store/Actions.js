@@ -1,4 +1,5 @@
 export const UPDATE_PAGE_NAME = "UPDATE_PAGE_NAME";
+export const UPDATE_IS_TOP_LEVEL_PAGE = "UPDATE_IS_TOP_LEVEL_PAGE";
 
 export const ADD_TRACK = "ADD_TRACK";
 export const CLEAR_TRACKS = "CLEAR_TRACKS";

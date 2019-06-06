@@ -12,6 +12,9 @@ const Styles = makeStyles(theme => ({
     // height: "4rem",
     boxShadow: "none"
   },
+  disabledBackButton: {
+    opacity: "0"
+  },
   // accountIconButton: {
   //   position: "fixed",
   //   right: "1.25rem",

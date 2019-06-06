@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import PageNameUpdate from "../../Utilities/PageNameUpdate";
+import { PageName, IsTopLevelPage } from "../../Utilities/Navigation";
 
 import Styles from "./Upload.styles";
 import Button from "@material-ui/core/Button";
@@ -8,11 +8,12 @@ const Upload = props => {
   const classes = Styles();
 
   const fileSelectHandler = event => {
-    console.log(event.target.files);
+    // console.log(event.target.files);
   };
 
   useEffect(() => {
-    PageNameUpdate("Upload");
+    PageName("Upload");
+    IsTopLevelPage(false);
   });
 
   return (

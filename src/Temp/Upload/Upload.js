@@ -46,7 +46,7 @@ const upload = props => {
     data.append("speaker", props.tracks[0].speaker);
     data.append("event", props.tracks[0].event);
     data.append("eventyear", "null");
-    console.log(props.tracks[0].eventYear);
+    // console.log(props.tracks[0].eventYear);
     // data.append("filesize", props.tracks[0].fileSize);
     // const data = { file: props.tracks[0].file };
     // const data = { title: props.tracks[0].title, file: props.tracks[0].file };

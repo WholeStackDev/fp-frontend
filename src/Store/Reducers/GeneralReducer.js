@@ -1,7 +1,8 @@
 import * as actionTypes from "../Actions";
 
 const initialState = {
-  pageName: ""
+  pageName: "",
+  isTopLevelPage: true
 };
 
 const reducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         pageName: action.value
+      };
+    case actionTypes.UPDATE_IS_TOP_LEVEL_PAGE:
+      return {
+        ...state,
+        isTopLevelPage: action.value
       };
     default:
       return state;

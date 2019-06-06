@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import UpdatePageName from "../../Utilities/PageNameUpdate";
+import { PageName, IsTopLevelPage } from "../../Utilities/Navigation";
 
 const Browse = props => {
   useEffect(() => {
-    UpdatePageName("Search");
+    PageName("Search");
+    IsTopLevelPage(true);
   });
 
   return <div style={{ padding: "2rem" }}>Coming soon</div>;

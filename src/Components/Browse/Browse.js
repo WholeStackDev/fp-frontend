@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
-import UpdatePageName from "../../Utilities/PageNameUpdate";
+import { PageName, IsTopLevelPage } from "../../Utilities/Navigation";
 
 import { Fragment } from "react";
 import MenuNavigation from "../MenuNavigation/MenuNavigation";
 
 const Browse = () => {
   useEffect(() => {
-    UpdatePageName("Browse");
+    PageName("Browse");
+    IsTopLevelPage(true);
   });
 
   return (
