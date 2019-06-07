@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { withStyles } from "@material-ui/styles";
 import { PageName, IsTopLevelPage } from "../../Utilities/Navigation";
+import { connect } from "react-redux";
+import { EDIT_TRACK } from "../../Store/Actions";
 
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -9,7 +11,14 @@ const TrackEdit = props => {
   useEffect(() => {
     PageName("Upload");
     IsTopLevelPage(false);
-  });
+  }, []);
+
+  const changeHandler = event => {
+    props.editTrack({
+      ...props.track,
+      [event.target.id]: event.target.value
+    });
+  };
 
   const CssTextField = withStyles(theme => ({
     root: {
@@ -42,7 +51,7 @@ const TrackEdit = props => {
         margin="normal"
         fullWidth
         disabled
-        // value={props.tracks[props.selectedTrackIndex].fileName}
+        value={props.track.fileName}
       />
       <CssTextField
         id="title"
@@ -57,8 +66,8 @@ const TrackEdit = props => {
             }
           }
         }}
-        // value={props.tracks[props.selectedTrackIndex].title}
-        // onChange={changeHandler}
+        value={props.track.title}
+        onChange={changeHandler}
       />
       <CssTextField
         id="speaker"
@@ -66,7 +75,7 @@ const TrackEdit = props => {
         variant="outlined"
         margin="normal"
         fullWidth
-        // value={props.tracks[props.selectedTrackIndex].speaker}
+        value={props.track.speaker}
         // onChange={changeHandler}
       />
       <CssTextField
@@ -75,7 +84,7 @@ const TrackEdit = props => {
         variant="outlined"
         margin="normal"
         fullWidth
-        // value={props.tracks[props.selectedTrackIndex].event}
+        value={props.track.event}
         // onChange={changeHandler}
       />
       <Grid container spacing={1}>
@@ -85,7 +94,7 @@ const TrackEdit = props => {
             label="Year"
             variant="outlined"
             margin="normal"
-            // value={props.tracks[props.selectedTrackIndex].event}
+            value={props.track.eventYear}
             // onChange={changeHandler}
           />
         </Grid>
@@ -114,4 +123,19 @@ const TrackEdit = props => {
   );
 };
 
-export default TrackEdit;
+const mapStateToProps = state => {
+  return {
+    track: state.upload.tracks[0]
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    editTrack: track => dispatch({ type: EDIT_TRACK, track: track })
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TrackEdit);

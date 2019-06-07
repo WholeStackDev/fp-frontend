@@ -15,7 +15,7 @@ const Content = props => {
       <Route path="/browse" exact component={Browse} />
       <Route path="/search" exact component={Search} />
       <Route path="/upload" exact component={Upload} />
-      <Route path="/track/edit" exact component={TrackEdit} />
+      <Route path="/track/edit" exact component={TrackEdit} key="test" />
       {/* The div below is a hack to account for the spacing of the bottom nav and now playing bar */}
       <div style={{ height: "7rem" }} />
     </Fragment>

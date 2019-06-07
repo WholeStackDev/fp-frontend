@@ -1,8 +1,10 @@
 import generalReducer from "./Reducers/GeneralReducer";
+import uploadReducer from "./Reducers/UploadReducer";
 import { createStore, combineReducers } from "redux";
 
 const rootReducer = combineReducers({
-  general: generalReducer
+  general: generalReducer,
+  upload: uploadReducer
 });
 
 const store = createStore(

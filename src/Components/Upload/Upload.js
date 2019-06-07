@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
 import { PageName, IsTopLevelPage } from "../../Utilities/Navigation";
+import { connect } from "react-redux";
+import { ADD_TRACK } from "../../Store/Actions";
+import * as mm from "music-metadata-browser";
 
 import Styles from "./Upload.styles";
 import Button from "@material-ui/core/Button";
@@ -8,7 +11,27 @@ const Upload = props => {
   const classes = Styles();
 
   const fileSelectHandler = event => {
-    props.history.push({ pathname: "track/edit" });
+    (async files => {
+      let id = 0;
+      const results = [];
+      for (const file of files) {
+        id++;
+        let meta = await mm.parseBlob(file);
+        results.push({
+          id: id,
+          fileName: file.name || "",
+          title: meta.common.title || "",
+          speaker: meta.common.artist || "",
+          event: "",
+          eventYear: meta.common.year || null,
+          fileSize: file.size || 0,
+          duration: meta.format.duration || 0,
+          file: file
+        });
+      }
+      props.addTrack(results);
+      props.history.push({ pathname: "track/edit" });
+    })(event.target.files);
   };
 
   useEffect(() => {
@@ -41,4 +64,13 @@ const Upload = props => {
   );
 };
 
-export default Upload;
+const mapDispatchToProps = dispatch => {
+  return {
+    addTrack: track => dispatch({ type: ADD_TRACK, trackToAdd: track })
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Upload);
