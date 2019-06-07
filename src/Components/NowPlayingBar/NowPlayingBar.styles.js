@@ -5,6 +5,7 @@ const styles = makeStyles(theme => ({
     width: "100%",
     position: "fixed",
     bottom: "3.5rem",
+    left: 0,
     borderTop: "1px solid #CCC"
   },
   trackName: {
