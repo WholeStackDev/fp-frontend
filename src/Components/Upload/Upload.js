@@ -8,7 +8,7 @@ const Upload = props => {
   const classes = Styles();
 
   const fileSelectHandler = event => {
-    // console.log(event.target.files);
+    props.history.push({ pathname: "track/edit" });
   };
 
   useEffect(() => {
