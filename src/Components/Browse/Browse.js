@@ -12,7 +12,7 @@ const Browse = () => {
 
   return (
     <Fragment>
-      <MenuNavigation url="/browse/speaker" label="Speaker" first />
+      <MenuNavigation url="/browse/speakers" label="Speaker" first />
       <MenuNavigation url="/browse/event" label="Event" />
     </Fragment>
   );
