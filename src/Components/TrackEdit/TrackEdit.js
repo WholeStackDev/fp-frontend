@@ -1,46 +1,40 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { withStyles } from "@material-ui/styles";
-import { PageName, IsTopLevelPage } from "../../Utilities/Navigation";
 import { connect } from "react-redux";
 import { EDIT_TRACK } from "../../Store/Actions";
 
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 
-const TrackEdit = props => {
-  useEffect(() => {
-    PageName("Upload");
-    IsTopLevelPage(false);
-  }, []);
+const CssTextField = withStyles(theme => ({
+  root: {
+    "& label.Mui-focused": {
+      color: theme.palette.secondary.main
+    },
+    "& .MuiInput-underline:after": {
+      borderBottomColor: theme.palette.secondary.main
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: theme.palette.primary.main
+      },
+      "&:hover fieldset": {
+        borderColor: theme.palette.primary.dark
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: theme.palette.secondary.main
+      }
+    }
+  }
+}))(TextField);
 
+const TrackEdit = props => {
   const changeHandler = event => {
     props.editTrack({
       ...props.track,
       [event.target.id]: event.target.value
     });
   };
-
-  const CssTextField = withStyles(theme => ({
-    root: {
-      "& label.Mui-focused": {
-        color: theme.palette.secondary.main
-      },
-      "& .MuiInput-underline:after": {
-        borderBottomColor: theme.palette.secondary.main
-      },
-      "& .MuiOutlinedInput-root": {
-        "& fieldset": {
-          borderColor: theme.palette.primary.main
-        },
-        "&:hover fieldset": {
-          borderColor: theme.palette.primary.dark
-        },
-        "&.Mui-focused fieldset": {
-          borderColor: theme.palette.secondary.main
-        }
-      }
-    }
-  }))(TextField);
 
   return (
     <div style={{ maxWidth: "500px", margin: "auto", padding: "1rem" }}>

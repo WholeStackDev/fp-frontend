@@ -22,7 +22,6 @@ const Speakers = props => {
 
   const [speakers, setSpeakers] = useState([{ firstName: " ", lastName: "" }]);
   const classes = Styles();
-  const data = [{ name: "John Smith" }];
 
   return (
     <div className={classes.root}>
