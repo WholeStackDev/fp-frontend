@@ -1,10 +1,13 @@
 import React from "react";
+import Styles from "./TrackEdit.styles";
 import { withStyles } from "@material-ui/styles";
 import { connect } from "react-redux";
-import { EDIT_TRACK } from "../../Store/Actions";
+import { EDIT_TRACK, CLEAR_TRACKS } from "../../Store/Actions";
+import axios from "axios";
 
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 
 const CssTextField = withStyles(theme => ({
   root: {
@@ -35,6 +38,21 @@ const TrackEdit = props => {
       [event.target.id]: event.target.value
     });
   };
+
+  const Submit = () => {
+    console.log("Calling API...");
+    axios
+      .post("http://localhost:4000/tracks/create", props.track)
+      .then(res => {
+        props.history.push({ pathname: "/upload" });
+        props.clearTracks();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const classes = Styles();
 
   return (
     <div style={{ maxWidth: "500px", margin: "auto", padding: "1rem" }}>
@@ -70,7 +88,7 @@ const TrackEdit = props => {
         margin="normal"
         fullWidth
         value={props.track.speaker}
-        // onChange={changeHandler}
+        onChange={changeHandler}
       />
       <CssTextField
         id="event"
@@ -79,7 +97,7 @@ const TrackEdit = props => {
         margin="normal"
         fullWidth
         value={props.track.event}
-        // onChange={changeHandler}
+        onChange={changeHandler}
       />
       <Grid container spacing={1}>
         <Grid item xs={4}>
@@ -89,7 +107,7 @@ const TrackEdit = props => {
             variant="outlined"
             margin="normal"
             value={props.track.eventYear}
-            // onChange={changeHandler}
+            onChange={changeHandler}
           />
         </Grid>
         <Grid item xs={4}>
@@ -98,8 +116,8 @@ const TrackEdit = props => {
             label="Month"
             variant="outlined"
             margin="normal"
-            // value={props.tracks[props.selectedTrackIndex].event}
-            // onChange={changeHandler}
+            value={props.track.eventMonth}
+            onChange={changeHandler}
           />
         </Grid>
         <Grid item xs={4}>
@@ -108,11 +126,19 @@ const TrackEdit = props => {
             label="Day"
             variant="outlined"
             margin="normal"
-            // value={props.tracks[props.selectedTrackIndex].event}
-            // onChange={changeHandler}
+            value={props.track.eventDay}
+            onChange={changeHandler}
           />
         </Grid>
       </Grid>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={Submit}
+        className={classes.button}
+      >
+        Submit
+      </Button>
     </div>
   );
 };
@@ -125,7 +151,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    editTrack: track => dispatch({ type: EDIT_TRACK, track: track })
+    editTrack: track => dispatch({ type: EDIT_TRACK, track: track }),
+    clearTracks: () => dispatch({ type: CLEAR_TRACKS })
   };
 };
 
