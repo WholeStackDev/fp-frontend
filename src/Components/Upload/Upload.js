@@ -44,7 +44,7 @@ const Upload = props => {
       <input
         id="upload-input"
         accept="audio/*"
-        name="uploadInput"
+        name="upload"
         type="file"
         onChange={fileSelectHandler}
         style={{ display: "none" }}

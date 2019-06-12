@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Styles from "./TrackEdit.styles";
 import { withStyles } from "@material-ui/styles";
 import { connect } from "react-redux";
@@ -44,13 +44,48 @@ const TrackEdit = props => {
     axios
       .post("http://localhost:4000/tracks/create", props.track)
       .then(res => {
-        props.history.push({ pathname: "/upload" });
-        props.clearTracks();
+        let formData = new FormData();
+        formData.append("upload", props.track.file);
+        axios
+          .post("http://localhost:4000/tracks/upload", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data"
+            }
+          })
+          .then(results => {
+            console.log(results);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        // props.history.push({ pathname: "/upload" });
+        // props.clearTracks();
       })
       .catch(err => {
         console.log(err);
       });
   };
+
+  // const [theFile, setTheFile] = useState({ file: null });
+  // const fileChange = (e) => {
+  //     this.setState({file:e.target.files[0]});
+  // }
+  // const submitTest = (e) => {
+  //   e.preventDefault();
+  //       const formData = new FormData();
+  //       formData.append('myFile',this.state.file);
+  //       const config = {
+  //           headers: {
+  //               'content-type': 'multipart/form-data'
+  //           }
+  //       };
+  //   axios.post("/upload",formData,config)
+  //     .then((response) => {
+  //         alert("The file is successfully uploaded");
+  //     }).catch((error) => {
+  //       console.log(error);
+  //   });
+  // }
 
   const classes = Styles();
 
@@ -139,6 +174,11 @@ const TrackEdit = props => {
       >
         Submit
       </Button>
+      {/* <form onSubmit={submitTest}>
+        <h1>File Upload</h1>
+        <input type="file" name="myFile" onChange= {fileChange} />
+        <button type="submit">Upload</button>
+      </form> */}
     </div>
   );
 };
