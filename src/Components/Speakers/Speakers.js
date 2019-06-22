@@ -14,7 +14,7 @@ const Speakers = props => {
     PageName("Speakers");
     IsTopLevelPage(false);
 
-    axios.get("http://localhost:4000/speakers").then(res => {
+    axios.get("https://fp-backend.herokuapp.com/speakers").then(res => {
       console.log(res.data);
       setSpeakers(res.data);
     });

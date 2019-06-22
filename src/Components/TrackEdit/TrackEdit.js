@@ -42,12 +42,12 @@ const TrackEdit = props => {
   const Submit = () => {
     console.log("Calling API...");
     axios
-      .post("http://localhost:4000/tracks/create", props.track)
+      .post("https://fp-backend.herokuapp.com/tracks/create", props.track)
       .then(res => {
         let formData = new FormData();
         formData.append("upload", props.track.file);
         axios
-          .post("http://localhost:4000/tracks/upload", formData, {
+          .post("https://fp-backend.herokuapp.com/tracks/upload", formData, {
             headers: {
               "Content-Type": "multipart/form-data"
             }
