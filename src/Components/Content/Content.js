@@ -8,6 +8,7 @@ import Search from "../Search/Search";
 import Upload from "../Upload/Upload";
 import TrackEdit from "../TrackEdit/TrackEdit";
 import Speakers from "../Speakers/Speakers";
+import Tracks from "../Tracks/Tracks";
 
 const Content = props => {
   return (
@@ -36,6 +37,7 @@ const Content = props => {
         key="test"
       />
       <Route path="/browse/speakers" exact component={Speakers} />
+      <Route path="/browse/tracks" exact component={Tracks} />
       {/* The div below is a hack to account for the spacing of the bottom nav and now playing bar */}
       <div style={{ height: "7rem" }} />
     </Fragment>

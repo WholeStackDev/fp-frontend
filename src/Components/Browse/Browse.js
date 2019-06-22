@@ -12,8 +12,8 @@ const Browse = () => {
 
   return (
     <Fragment>
-      <MenuNavigation url="/browse/speakers" label="Speaker" first />
-      <MenuNavigation url="/browse/event" label="Event" />
+      <MenuNavigation url="/browse/tracks" label="Tracks" first />
+      {/* <MenuNavigation url="/browse/event" label="Event" /> */}
     </Fragment>
   );
 };

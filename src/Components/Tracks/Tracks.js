@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Styles from "./Speakers.styles";
+import Styles from "./Tracks.styles";
 import { PageName, IsTopLevelPage } from "../../Utilities/Navigation";
 import axios from "axios";
 
@@ -9,17 +9,17 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
-const Speakers = props => {
+const Tracks = props => {
   useEffect(() => {
-    PageName("Speakers");
+    PageName("Tracks");
     IsTopLevelPage(false);
 
-    axios.get("/speakers").then(res => {
-      setSpeakers(res.data);
+    axios.get("/tracks").then(res => {
+      setTracks(res.data);
     });
   }, []);
 
-  const [speakers, setSpeakers] = useState([{ firstName: " ", lastName: "" }]);
+  const [tracks, setTracks] = useState([{ id: "0", title: " ", speaker: " " }]);
   const classes = Styles();
 
   return (
@@ -27,15 +27,15 @@ const Speakers = props => {
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell>First Name</TableCell>
-            <TableCell>Last Name</TableCell>
+            <TableCell>Title</TableCell>
+            <TableCell>Speaker</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {speakers.map(row => (
-            <TableRow key={row.firstName}>
-              <TableCell>{row.firstName}</TableCell>
-              <TableCell>{row.lastName}</TableCell>
+          {tracks.map(row => (
+            <TableRow key={row.id}>
+              <TableCell>{row.title}</TableCell>
+              <TableCell>{row.speaker}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -44,4 +44,4 @@ const Speakers = props => {
   );
 };
 
-export default Speakers;
+export default Tracks;

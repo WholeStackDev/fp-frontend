@@ -40,30 +40,23 @@ const TrackEdit = props => {
   };
 
   const Submit = () => {
-    console.log("Calling API...");
     axios
-      .post("https://fp-backend.herokuapp.com/tracks/create", props.track)
+      .post("/tracks/create", props.track)
       .then(res => {
         let formData = new FormData();
         formData.append("upload", props.track.file);
         axios
-          .post("https://fp-backend.herokuapp.com/tracks/upload", formData, {
+          .post("/tracks/upload", formData, {
             headers: {
               "Content-Type": "multipart/form-data"
             }
           })
-          .then(results => {
-            console.log(results);
-          })
-          .catch(err => {
-            console.log(err);
-          });
+          .then(results => {})
+          .catch(err => {});
         // props.history.push({ pathname: "/upload" });
         // props.clearTracks();
       })
-      .catch(err => {
-        console.log(err);
-      });
+      .catch(err => {});
   };
 
   // const [theFile, setTheFile] = useState({ file: null });

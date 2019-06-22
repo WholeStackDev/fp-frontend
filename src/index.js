@@ -4,32 +4,38 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "typeface-roboto";
-// import axios from "axios";
+import axios from "axios";
 
 import { Provider } from "react-redux";
 import store from "./Store/Store";
 
-// axios.interceptors.request.use(
-//   request => {
-//     console.log(request);
-//     return request;
-//   },
-//   error => {
-//     console.log(error);
-//     return error;
-//   }
-// );
+if (process.env.NODE_ENV == "development") {
+  axios.defaults.baseURL = "http://localhost:4000";
+} else {
+  axios.defaults.baseURL = "https://fp-backend.herokuapp.com";
+}
 
-// axios.interceptors.response.use(
-//   response => {
-//     console.log(response);
-//     return response;
-//   },
-//   error => {
-//     console.log(error);
-//     return error;
-//   }
-// );
+axios.interceptors.request.use(
+  request => {
+    console.log(request);
+    return request;
+  },
+  error => {
+    console.log(error);
+    return error;
+  }
+);
+
+axios.interceptors.response.use(
+  response => {
+    console.log(response);
+    return response;
+  },
+  error => {
+    console.log(error);
+    return error;
+  }
+);
 
 ReactDOM.render(
   <Provider store={store}>
