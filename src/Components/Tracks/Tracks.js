@@ -30,6 +30,7 @@ const Tracks = props => {
   const downloadFile = (id, title) => {
     // Having a hard time getting Axios to work, so directly using FileSaver for now.
     const downloadPath = axios.defaults.baseURL + "/tracks/download?id=" + id;
+    // window.location();
     saveAs(downloadPath, title + ".mp3");
   };
 
@@ -49,12 +50,19 @@ const Tracks = props => {
               <TableCell>{row.title}</TableCell>
               <TableCell>{row.speaker}</TableCell>
               <TableCell>
-                <IconButton
+                <a
+                  href={
+                    axios.defaults.baseURL + "/tracks/download?id=" + row.id
+                  }
+                >
+                  Download
+                </a>
+                {/* <IconButton
                   onClick={() => downloadFile(row.id, row.title)}
                   id="back-button"
                 >
                   <DownloadIcon />
-                </IconButton>
+                </IconButton> */}
               </TableCell>
             </TableRow>
           ))}
