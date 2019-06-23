@@ -2,6 +2,11 @@ import React, { useEffect, useState } from "react";
 import Styles from "./Tracks.styles";
 import { PageName, IsTopLevelPage } from "../../Utilities/Navigation";
 import axios from "axios";
+import fileDownload from "js-file-download";
+import { saveAs } from "file-saver";
+
+import IconButton from "@material-ui/core/IconButton";
+import DownloadIcon from "@material-ui/icons/CloudDownloadOutlined";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -22,6 +27,12 @@ const Tracks = props => {
   const [tracks, setTracks] = useState([{ id: "0", title: " ", speaker: " " }]);
   const classes = Styles();
 
+  const downloadFile = (id, title) => {
+    // Having a hard time getting Axios to work, so directly using FileSaver for now.
+    const downloadPath = axios.defaults.baseURL + "/tracks/download?id=" + id;
+    saveAs(downloadPath, title + ".mp3");
+  };
+
   return (
     <div className={classes.root}>
       <Table className={classes.table}>
@@ -29,6 +40,7 @@ const Tracks = props => {
           <TableRow>
             <TableCell>Title</TableCell>
             <TableCell>Speaker</TableCell>
+            <TableCell>Download</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -36,6 +48,14 @@ const Tracks = props => {
             <TableRow key={row.id}>
               <TableCell>{row.title}</TableCell>
               <TableCell>{row.speaker}</TableCell>
+              <TableCell>
+                <IconButton
+                  onClick={() => downloadFile(row.id, row.title)}
+                  id="back-button"
+                >
+                  <DownloadIcon />
+                </IconButton>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

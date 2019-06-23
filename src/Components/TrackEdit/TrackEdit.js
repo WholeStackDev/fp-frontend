@@ -43,10 +43,11 @@ const TrackEdit = props => {
     axios
       .post("/tracks/create", props.track)
       .then(res => {
+        console.log(res.data);
         let formData = new FormData();
         formData.append("upload", props.track.file);
         axios
-          .post("/tracks/upload", formData, {
+          .post("/tracks/upload?id=" + res.data.id, formData, {
             headers: {
               "Content-Type": "multipart/form-data"
             }
