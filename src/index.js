@@ -4,18 +4,37 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "typeface-roboto";
+import axios from "axios";
 
-import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
-import uploadReducer from "./Store/Reducers/UploadReducer";
+import store from "./Store/Store";
 
-const rootReducer = combineReducers({
-  upload: uploadReducer
-});
+if (process.env.NODE_ENV == "development") {
+  axios.defaults.baseURL = "http://localhost:4000";
+} else {
+  axios.defaults.baseURL = "https://fp-backend.herokuapp.com";
+}
 
-const store = createStore(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+axios.interceptors.request.use(
+  request => {
+    console.log(request);
+    return request;
+  },
+  error => {
+    console.log(error);
+    return error;
+  }
+);
+
+axios.interceptors.response.use(
+  response => {
+    console.log(response);
+    return response;
+  },
+  error => {
+    console.log(error);
+    return error;
+  }
 );
 
 ReactDOM.render(
