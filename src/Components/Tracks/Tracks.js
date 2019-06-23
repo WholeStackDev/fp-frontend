@@ -54,6 +54,7 @@ const Tracks = props => {
                   href={
                     axios.defaults.baseURL + "/tracks/download?id=" + row.id
                   }
+                  download
                 >
                   Download
                 </a>
