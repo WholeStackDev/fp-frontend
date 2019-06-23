@@ -12,7 +12,7 @@ import store from "./Store/Store";
 if (process.env.NODE_ENV == "development") {
   axios.defaults.baseURL = "http://localhost:4000";
 } else {
-  axios.defaults.baseURL = "https://fp-backend.herokuapp.com";
+  axios.defaults.baseURL = "https:/fp-backend.azurewebsites.net";
 }
 
 axios.interceptors.request.use(
