@@ -9,7 +9,7 @@ import axios from "axios";
 import { Provider } from "react-redux";
 import store from "./Store/Store";
 
-if (process.env.NODE_ENV == "development") {
+if (process.env.NODE_ENV === "development") {
   axios.defaults.baseURL = "http://localhost:4000";
 } else {
   axios.defaults.baseURL = "https://fp-backend.azurewebsites.net";

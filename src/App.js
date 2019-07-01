@@ -9,7 +9,7 @@ import theme from "./theme";
 import BottomNavigation from "./Components/BottomNavigation/BottomNavigation";
 import PlayerMinimized from "./Components/NowPlayingBar/NowPlayingBar";
 import AppBar from "./Components/AppBar/AppBar";
-import Content from "./Components/Content/Content";
+import Content from "./Containers/Content/Content";
 
 const app = () => {
   return (

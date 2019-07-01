@@ -2,13 +2,12 @@ import React, { Fragment } from "react";
 import { Route } from "react-router-dom";
 import { PageName, IsTopLevelPage } from "../../Utilities/Navigation";
 
-import Account from "../Account/Account";
-import Browse from "../Browse/Browse";
-import Search from "../Search/Search";
-import Upload from "../Upload/Upload";
-import TrackEdit from "../TrackEdit/TrackEdit";
-import Speakers from "../Speakers/Speakers";
-import Tracks from "../Tracks/Tracks";
+import Account from "../../Components/Account/Account";
+import Browse from "../../Components/Browse/Browse";
+import Search from "../../Components/Search/Search";
+import Speakers from "../../Components/Speakers/Speakers";
+import Tracks from "../../Components/Tracks/Tracks";
+import Upload from "../Upload";
 
 const Content = props => {
   return (
@@ -17,6 +16,8 @@ const Content = props => {
       <Route path="/account" exact component={Account} />
       <Route path="/browse" exact component={Browse} />
       <Route path="/search" exact component={Search} />
+      <Route path="/browse/speakers" exact component={Speakers} />
+      <Route path="/browse/tracks" exact component={Tracks} />
       <Route
         path="/upload"
         exact
@@ -26,18 +27,6 @@ const Content = props => {
           return <Upload {...routeProps} />;
         }}
       />
-      <Route
-        path="/track/edit"
-        exact
-        render={routeProps => {
-          PageName("Upload Review");
-          IsTopLevelPage(false);
-          return <TrackEdit {...routeProps} />;
-        }}
-        key="test"
-      />
-      <Route path="/browse/speakers" exact component={Speakers} />
-      <Route path="/browse/tracks" exact component={Tracks} />
       {/* The div below is a hack to account for the spacing of the bottom nav and now playing bar */}
       <div style={{ height: "7rem" }} />
     </Fragment>
