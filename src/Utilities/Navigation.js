@@ -8,3 +8,8 @@ export const PageName = value => {
 export const IsTopLevelPage = value => {
   store.dispatch({ type: UPDATE_IS_TOP_LEVEL_PAGE, value });
 };
+
+export const Navigate = (pageName, IsTopLevelPage) => {
+  store.dispatch({ type: UPDATE_PAGE_NAME, value: pageName });
+  store.dispatch({ type: UPDATE_IS_TOP_LEVEL_PAGE, IsTopLevelPage });
+};
