@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import { Navigate } from "../../Utilities/Navigation";
 
 import { Browse, Account, Search } from "../../Components";
-import { Upload, Tracks } from "../../Containers";
+import { Upload, Tracks, Player } from "../../Containers";
 
 const Content = () => {
   return (
@@ -60,6 +60,15 @@ const Content = () => {
           render={routeProps => {
             Navigate("Upload", false);
             return <Upload {...routeProps} />;
+          }}
+        />
+
+        <Route
+          path="/player"
+          exact
+          render={routeProps => {
+            Navigate("Player", false);
+            return <Player {...routeProps} />;
           }}
         />
       </Switch>
