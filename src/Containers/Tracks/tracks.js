@@ -14,7 +14,7 @@ const Tracks = () => {
 
   return (
     <Fragment>
-      {tracks.length == 0 && <p>Loading...</p>}
+      {tracks.length === 0 && <p>Loading...</p>}
       {tracks.length > 0 && <TracksTable tracks={tracks} />}
     </Fragment>
   );
