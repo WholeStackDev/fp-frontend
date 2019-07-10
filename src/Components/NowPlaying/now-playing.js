@@ -31,10 +31,10 @@ const NowPlaying = props => {
           <Box>
             <div
               style={{
-                maxWidth: "500px",
-                width: "90vw",
-                maxHeight: "500px",
-                height: "90vw",
+                maxWidth: "300px",
+                width: "70vw",
+                maxHeight: "300px",
+                height: "70vw",
                 background: "linear-gradient(135deg, rgba(2,0,36,1) 0%, rgba(27,27,138,1) 35%, rgba(0,212,255,1) 100%)"
               }}
             />
