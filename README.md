@@ -2,7 +2,7 @@
 
 This project is for creating a web audio player for sermons and messages in the Church of Christ. A small team is working to digitize thousands of cassettes from the past four or five decades and we want an app to host them that offers things we couldn't find in existing services.
 
-*This repo is for the frontend React app. The backend Node.js app can be found [here](https://github.com/WholeStackDev/fp-frontend).*
+*This repo is for the frontend React app. The backend Node.js app can be found [here](https://github.com/WholeStackDev/fp-backend).*
 
 ### Things completed so far
 
