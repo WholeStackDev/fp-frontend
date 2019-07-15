@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState, useRef } from "react";
 import { Howl } from "howler";
 import { NowPlaying } from "../../Components";
 
-const Player = () => {
+const Player = props => {
   const [player, setPlayer] = useState(null);
   const [playing, setPlaying] = useState(false);
   const [seekPosition, setSeekPosition] = useState(0);
@@ -21,60 +21,58 @@ const Player = () => {
   preventSeekLoopRef.current = preventSeekLoop;
 
   useEffect(() => {
+    //* Loads the entire track into memory before playing it since streaming currently won't pre-load
+    const loadBlob = url => {
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "blob";
+        xhr.onload = () => resolve(xhr.response);
+        xhr.onerror = () => reject(xhr.statusText);
+        xhr.send();
+      });
+    };
+    const initialize = async () => {
+      const blob = await loadBlob("http://localhost:4000/tracks/download?id=" + props.match.params.id);
+      const blobURL = window.URL.createObjectURL(blob);
+      const newPlayer = new Howl({
+        src: [blobURL],
+        format: [".mp3"],
+        autoplay: true,
+        html5: true,
+        onplay: updatePlayingStatus,
+        onpause: updatePlayingStatus,
+        onend: finishedPlaying
+      });
+      setPlayer(newPlayer);
+    };
     initialize();
   }, []);
 
-  useEffect(() => {
-    if (player !== null) {
-      player.play();
-      setPlaying(!playing);
-    }
-  }, [player]);
-
-  useEffect(() => {
-    if (playing && !seekLoopRunning) {
-      seekLoop();
-    }
-  }, [playing]);
-
-  useEffect(() => {
-    if (playing && !seekLoopRunning && !preventSeekLoop) {
-      seekLoop();
-    }
-  }, [preventSeekLoop]);
-
-  useEffect(() => {
-    if (player !== null) {
-      if (!isNaN(seekPosition)) setSeekPercent(seekPosition / player.duration());
-    }
-  }, [seekPosition]);
-
-  //* Loads the entire track into memory before playing it since streaming currently won't pre-load
-  const loadBlob = url => {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open("GET", url, true);
-      xhr.responseType = "blob";
-      xhr.onload = () => resolve(xhr.response);
-      xhr.onerror = () => reject(xhr.statusText);
-      xhr.send();
-    });
+  const finishedPlaying = () => {
+    setPlaying(false);
+    setSeekPosition(0);
+    setSeekPercent(0);
   };
 
-  const initialize = async () => {
-    const blob = await loadBlob("https://fp-backend.azurewebsites.net/tracks/download?id=b87f52c0-95fc-11e9-b29c-a9d34d14769b");
-    const blobURL = window.URL.createObjectURL(blob);
-    const newPlayer = new Howl({
-      src: [blobURL],
-      format: [".mp3"],
-      autoplay: true,
-      html5: true,
-      onseek: onSeek,
-      onplay: updatePlayingStatus,
-      onpause: updatePlayingStatus
-    });
-    setPlayer(newPlayer);
-  };
+  //* Manages a loop that runs while the track is playing to keep the seek position up to date
+  useEffect(() => {
+    const seekLoop = () => {
+      if (playingRef.current && !preventSeekLoopRef.current) {
+        if (!seekLoopRunning) setSeekLoopRunning(true);
+        const time = Math.round(player.seek() * 100) / 100;
+        if (!isNaN(time) && time !== seekPositionRef) {
+          setSeekPosition(time);
+          setSeekPercent(time / player.duration());
+        }
+        setTimeout(seekLoop, 100);
+      } else {
+        setSeekLoopRunning(false);
+      }
+    };
+    if (!player || !playing || seekLoopRunning || preventSeekLoop) return;
+    seekLoop();
+  }, [player, playing, preventSeekLoop, seekLoopRunning]);
 
   const togglePlaying = () => {
     if (player.playing()) {
@@ -88,32 +86,23 @@ const Player = () => {
     setPlaying(playerRef.current.playing());
   };
 
-  //* Runs while the track is playing to keep the seek position up to date
-  const seekLoop = () => {
-    if (playingRef.current && !preventSeekLoopRef.current) {
-      if (!seekLoopRunning) setSeekLoopRunning(true);
-      // const time = Math.floor(player.seek());
-      const time = Math.round(player.seek() * 100) / 100;
-      if (!isNaN(time) && time !== seekPositionRef) {
-        setSeekPosition(time);
-      }
-      setTimeout(seekLoop, 100);
-    } else {
-      setSeekLoopRunning(false);
-    }
-  };
-
-  const onSeek = () => {
-    setSeekPosition(Math.floor(playerRef.current.seek()));
-  };
-
   const seekSliderChange = percent => {
+    //* Only relevant if you are navigating directly to a track and scrubbing before
+    //* clicking play, but I'm doing this play/pause thing to get the track to load.
+    if (player.state() === "unloaded") {
+      player.play();
+      player.pause();
+    }
     setPreventSeekLoop(true);
     setSeekPosition(Math.floor(player.duration() * percent));
+    setSeekPercent(percent);
   };
 
   const seekSliderChangeCommitted = percent => {
-    player.seek(Math.floor(player.duration() * percent));
+    const newPosition = Math.floor(player.duration() * percent);
+    player.seek(newPosition);
+    setSeekPosition(newPosition);
+    setSeekPercent(percent);
     setPreventSeekLoop(false);
   };
 
@@ -128,6 +117,8 @@ const Player = () => {
           seekPercent={seekPercent}
           seekSliderChange={seekSliderChange}
           seekSliderChangeCommitted={seekSliderChangeCommitted}
+          title={props.location.state.title}
+          speaker={props.location.state.speaker}
         />
       )}
     </Fragment>
