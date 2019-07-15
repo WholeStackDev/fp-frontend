@@ -42,8 +42,8 @@ const NowPlaying = props => {
         </Box>
         <Box display="flex" justifyContent="flex-left">
           <Box>
-            <h3>Not of this world</h3>
-            <h4>George Faull</h4>
+            <h3>{props.title}</h3>
+            <h4>{props.speaker}</h4>
           </Box>
         </Box>
         <Box display="flex" justifyContent="center">

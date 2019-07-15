@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState, useRef } from "react";
 import { Howl } from "howler";
 import { NowPlaying } from "../../Components";
 
-const Player = () => {
+const Player = props => {
   const [player, setPlayer] = useState(null);
   const [playing, setPlaying] = useState(false);
   const [seekPosition, setSeekPosition] = useState(0);
@@ -33,7 +33,7 @@ const Player = () => {
       });
     };
     const initialize = async () => {
-      const blob = await loadBlob("http://localhost:4000/tracks/download?id=b87f52c0-95fc-11e9-b29c-a9d34d14769b");
+      const blob = await loadBlob("http://localhost:4000/tracks/download?id=" + props.match.params.id);
       const blobURL = window.URL.createObjectURL(blob);
       const newPlayer = new Howl({
         src: [blobURL],
@@ -117,6 +117,8 @@ const Player = () => {
           seekPercent={seekPercent}
           seekSliderChange={seekSliderChange}
           seekSliderChangeCommitted={seekSliderChangeCommitted}
+          title={props.location.state.title}
+          speaker={props.location.state.speaker}
         />
       )}
     </Fragment>

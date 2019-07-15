@@ -64,7 +64,7 @@ const Content = () => {
         />
 
         <Route
-          path="/player"
+          path="/player/:id"
           exact
           render={routeProps => {
             Navigate("Player", false);
