@@ -33,7 +33,7 @@ const Player = props => {
       });
     };
     const initialize = async () => {
-      const blob = await loadBlob("http://fp-backend.herokuapp.com/tracks/download?id=" + props.match.params.id);
+      const blob = await loadBlob("https://fp-backend.herokuapp.com/tracks/download?id=" + props.match.params.id);
       const blobURL = window.URL.createObjectURL(blob);
       const newPlayer = new Howl({
         src: [blobURL],
