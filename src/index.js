@@ -15,27 +15,27 @@ if (process.env.NODE_ENV === "development") {
   axios.defaults.baseURL = "https://fp-backend.azurewebsites.net";
 }
 
-axios.interceptors.request.use(
-  request => {
-    console.log(request);
-    return request;
-  },
-  error => {
-    console.log(error);
-    return error;
-  }
-);
+// axios.interceptors.request.use(
+//   request => {
+//     console.log(request);
+//     return request;
+//   },
+//   error => {
+//     console.log(error);
+//     return error;
+//   }
+// );
 
-axios.interceptors.response.use(
-  response => {
-    console.log(response);
-    return response;
-  },
-  error => {
-    console.log(error);
-    return error;
-  }
-);
+// axios.interceptors.response.use(
+//   response => {
+//     console.log(response);
+//     return response;
+//   },
+//   error => {
+//     console.log(error);
+//     return error;
+//   }
+// );
 
 ReactDOM.render(
   <Provider store={store}>

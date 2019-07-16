@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
-import axios from "axios";
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
 import { withRouter } from "react-router";
 
 const Tracks = props => {
-  const onClick = (id, title, speaker) => {
-    props.history.push({ pathname: "/player/" + id, state: { title: title, speaker: speaker } });
+  const onClick = (id, index) => {
+    console.log(index);
+    props.history.push({ pathname: "/player/" + id, state: { tracks: props.tracks, currentIndex: index } });
   };
   return (
     <Fragment>
@@ -18,8 +18,8 @@ const Tracks = props => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.tracks.map(row => (
-            <TableRow key={row.id} onClick={() => onClick(row.id, row.title, row.speaker)}>
+          {props.tracks.map((row, index) => (
+            <TableRow key={row.id} onClick={() => onClick(row.id, index)}>
               <TableCell>{row.title}</TableCell>
               <TableCell>{row.speaker}</TableCell>
               {/* <TableCell>

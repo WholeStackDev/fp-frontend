@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Styles from "./AppBar.styles";
+import css from "./AppBar.module.css";
 import { withRouter } from "react-router";
 
 import MuiAppBar from "@material-ui/core/AppBar";
@@ -31,12 +32,7 @@ const AppBar = props => {
 
   if (props.isTopLevelPage) {
     backButton = (
-      <IconButton
-        disabled
-        className={classes.disabledBackButton}
-        onClick={goBack}
-        id="back-button"
-      >
+      <IconButton disabled className={classes.disabledBackButton} onClick={goBack} id="back-button">
         <ArrowBackIcon id="back-icon" />
       </IconButton>
     );
@@ -49,7 +45,7 @@ const AppBar = props => {
   }
 
   return (
-    <MuiAppBar position="sticky" color="inherit" className={classes.appBar}>
+    <MuiAppBar position="sticky" color="inherit" className={(classes.appBar, css.root)}>
       <Toolbar>
         {backButton}
         <Typography

@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState, useRef } from "react";
 import { Howl } from "howler";
 import { NowPlaying } from "../../Components";
+import { loadBlob } from "./player-utils";
 
 const Player = props => {
   const [player, setPlayer] = useState(null);
@@ -9,6 +10,9 @@ const Player = props => {
   const [seekPercent, setSeekPercent] = useState(0);
   const [seekLoopRunning, setSeekLoopRunning] = useState(false);
   const [preventSeekLoop, setPreventSeekLoop] = useState(false);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(null);
+  const [currentTrackId, setCurrentTrackId] = useState(null);
+  const [trackList, setTrackList] = useState(null);
 
   const playerRef = useRef(player);
   const playingRef = useRef(playing);
@@ -21,33 +25,44 @@ const Player = props => {
   preventSeekLoopRef.current = preventSeekLoop;
 
   useEffect(() => {
-    //* Loads the entire track into memory before playing it since streaming currently won't pre-load
-    const loadBlob = url => {
-      return new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", url, true);
-        xhr.responseType = "blob";
-        xhr.onload = () => resolve(xhr.response);
-        xhr.onerror = () => reject(xhr.statusText);
-        xhr.send();
-      });
-    };
-    const initialize = async () => {
-      const blob = await loadBlob("http://localhost:4000/tracks/download?id=" + props.match.params.id);
-      const blobURL = window.URL.createObjectURL(blob);
-      const newPlayer = new Howl({
-        src: [blobURL],
-        format: [".mp3"],
-        autoplay: true,
-        html5: true,
-        onplay: updatePlayingStatus,
-        onpause: updatePlayingStatus,
-        onend: finishedPlaying
-      });
-      setPlayer(newPlayer);
-    };
-    initialize();
-  }, []);
+    if (props.match.params.id !== null) setCurrentTrackId(props.match.params.id);
+  }, [props.match.params.id]);
+
+  useEffect(() => {
+    if (props.location.state.tracks !== null) setTrackList(props.location.state.tracks);
+  }, [props.location.state.tracks]);
+
+  useEffect(() => {
+    if (props.location.state.currentIndex !== null) setCurrentTrackIndex(props.location.state.currentIndex);
+  }, [props.location.state.currentIndex]);
+
+  useEffect(() => {
+    if (trackList !== null && currentTrackIndex !== null) {
+      if (trackList[currentTrackIndex].id !== currentTrackId) {
+        setCurrentTrackId(trackList[currentTrackIndex].id);
+        finishedPlaying();
+      }
+    }
+  }, [trackList, currentTrackIndex]);
+
+  useEffect(() => {
+    if (currentTrackId !== null) {
+      (async () => {
+        const blob = await loadBlob("http://localhost:4000/tracks/download?id=" + currentTrackId);
+        const blobURL = window.URL.createObjectURL(blob);
+        const newPlayer = new Howl({
+          src: [blobURL],
+          format: [".mp3"],
+          autoplay: true,
+          html5: true,
+          onplay: updatePlayingStatus,
+          onpause: updatePlayingStatus,
+          onend: finishedPlaying
+        });
+        setPlayer(newPlayer);
+      })();
+    }
+  }, [currentTrackId]);
 
   const finishedPlaying = () => {
     setPlaying(false);
@@ -106,9 +121,25 @@ const Player = props => {
     setPreventSeekLoop(false);
   };
 
+  const skipNext = () => {
+    if (currentTrackIndex === trackList.length) {
+      setCurrentTrackIndex(0);
+    } else {
+      setCurrentTrackIndex(currentTrackIndex + 1);
+    }
+  };
+
+  const skipPrevious = () => {
+    if (currentTrackIndex === 0) {
+      setCurrentTrackIndex(trackList.length);
+    } else {
+      setCurrentTrackIndex(currentTrackIndex - 1);
+    }
+  };
+
   return (
     <Fragment>
-      {player != null && (
+      {player != null && currentTrackIndex !== null && trackList !== null && (
         <NowPlaying
           player={player}
           togglePlaying={togglePlaying}
@@ -117,8 +148,9 @@ const Player = props => {
           seekPercent={seekPercent}
           seekSliderChange={seekSliderChange}
           seekSliderChangeCommitted={seekSliderChangeCommitted}
-          title={props.location.state.title}
-          speaker={props.location.state.speaker}
+          skipPrevious={skipPrevious}
+          skipNext={skipNext}
+          {...trackList[currentTrackIndex]}
         />
       )}
     </Fragment>

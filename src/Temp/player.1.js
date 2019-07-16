@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Howl, Howler } from "howler";
 // import ReactPlayer from "react-player";
-import { NowPlaying } from "../../Components";
+import { NowPlaying } from "../Components";
 
 const Player = () => {
   // const [playing, setPlaying] = useState(true);
