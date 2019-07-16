@@ -67,14 +67,14 @@ const NowPlaying = props => {
         </Box>
         <Box display="flex" justifyContent="center">
           <Box>
-            <IconButton>
+            <IconButton onClick={props.skipPrevious}>
               <SkipPrevious fontSize="large" />
             </IconButton>
             <IconButton onClick={props.togglePlaying}>
               {!props.playing && <Play fontSize="large" />}
               {props.playing && <Pause fontSize="large" />}
             </IconButton>
-            <IconButton>
+            <IconButton onClick={props.skipNext}>
               <SkipNext fontSize="large" />
             </IconButton>
           </Box>
